@@ -1,0 +1,91 @@
+/* Dashboard.css */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f4f5f8;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.logout-button {
+  background: #ff4b5c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background: #d9364a;
+}
+
+/* Main Dashboard Layout */
+.dashboard-main {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 50px);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 80px;
+  background: #2c2f33;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+/* Channel List */
+.channel-list {
+  width: 250px;
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+  padding: 15px;
+}
+
+.channel-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.channel-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.channel-list li:hover {
+  background: #f0f0f0;
+}
+
+/* Chat Window */
+.chat-window {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+/* Placeholder */
+.placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #888;
+}
