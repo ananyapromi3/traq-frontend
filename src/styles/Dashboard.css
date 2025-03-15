@@ -66,7 +66,7 @@
 
 /* Channel List */
 .channel-list {
-  width: 250px;
+  /* width: 250px; */
   background: #350d36; /* Slightly darker than sidebar */
   color: white;
   /* border-right: 1px solid #532753; */
@@ -104,4 +104,20 @@
   justify-content: center;
   font-size: 18px;
   color: #888;
+}
+
+.activity-container {
+  display: flex;
+  flex-direction: column;
+  /* width: 250px; */
+}
+
+.activity-feed {
+  width: 100%;
+  /* width: 250px; */
+}
+
+.channel-list {
+  /* width: 100%; */
+  margin-top: 0px; /* Pushes it down */
 }

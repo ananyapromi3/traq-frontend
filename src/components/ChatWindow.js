@@ -10,18 +10,27 @@ import {
 } from "react-icons/fa";
 import "../styles/ChatWindow.css";
 
-const ChatWindow = ({ channelId, channelName }) => {
+const ChatWindow = ({ channelId, channelName1, onClose }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [users, setUsers] = useState({});
   const [userIcons, setUserIcons] = useState({});
   const [memberCount, setMemberCount] = useState(0);
+  const [channelName, setChannelName] = useState("");
+  const [pinned, setPinned] = useState(0);
 
   useEffect(() => {
     if (!channelId) return;
 
     const fetchMessages = async () => {
       try {
+        const response1 = await axios.get(
+          `https://traq.duckdns.org/api/v3/channels/${channelId}`,
+          { withCredentials: true }
+        );
+        // console.log("Channel Data:", response1.data);
+        setChannelName(response1.data.name);
+
         const response = await axios.get(
           `https://traq.duckdns.org/api/v3/channels/${channelId}/messages`,
           { withCredentials: true }
@@ -29,6 +38,14 @@ const ChatWindow = ({ channelId, channelName }) => {
 
         const messagesData = response.data;
         const userIds = [...new Set(messagesData.map((msg) => msg.userId))];
+
+        const response2 = await axios.get(
+            `https://traq.duckdns.org/api/v3/channels/${channelId}/pins`,
+            { withCredentials: true }
+          );
+        //   console.log("Pinned Data:", response2);
+          setPinned(response2.data.length);
+  
 
         const userRequests = userIds.map((id) =>
           axios.get(`https://traq.duckdns.org/api/v3/users/${id}`, {
@@ -73,7 +90,7 @@ const ChatWindow = ({ channelId, channelName }) => {
           `https://traq.duckdns.org/api/v3/channels/${channelId}/stats`,
           { withCredentials: true }
         );
-        console.log("Member Count:", response);
+        // console.log("Member Count:", response);
         setMemberCount(response.data.users.length);
       } catch (error) {
         console.error("Error fetching member count:", error);
@@ -168,9 +185,9 @@ const ChatWindow = ({ channelId, channelName }) => {
             <FaUsers /> {memberCount}
           </button>
           <button className="icon-button">
-            <FaBookmark /> 5 Pinned
+            <FaBookmark /> {pinned} Pinned
           </button>
-          <button className="icon-button close-button">
+          <button className="close-button" onClick={onClose}>
             <FaTimes />
           </button>
         </div>

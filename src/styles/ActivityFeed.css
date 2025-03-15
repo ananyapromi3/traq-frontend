@@ -1,0 +1,90 @@
+.activity-feed {
+  width: 250px;
+  /* background: white; 
+  color: rgba(30, 27, 27, 0.652);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 5px;
+  overflow: scroll; */
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  text-align: left;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0px;
+  align-items: flex-start;
+  width: 430px;
+}
+
+.tabs {
+  /* width: 100%; */
+  /* font-size: 8px;  */
+  padding: auto;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+
+.tabs button {
+  font-size: 15px;
+  background: none;
+  border: none;
+  padding: auto;
+  cursor: pointer;
+  font-weight: bold;
+  color: #888;
+}
+
+.tabs .active {
+  color: #333;
+  border-bottom: 2px solid #d38ef4;
+}
+
+.activity-list {
+  margin-top: 10px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.activity-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.timestamp {
+  font-size: 10px;
+  color: #888;
+}
+
+.channel-list {
+  margin-top: 10px; /* Adds spacing between ActivityFeed and ChannelList */
+}

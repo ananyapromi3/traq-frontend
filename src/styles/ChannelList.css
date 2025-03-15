@@ -1,12 +1,13 @@
 .channel-list {
-  width: 250px;
+  width: 400px;
   background: white; /* Slightly darker than sidebar */
   color: rgba(30, 27, 27, 0.652);
   /* border-right: 1px solid #532753; */
   padding: 15px;
   border-radius: 8px;
-  margin-top: 5px;
+  margin-top: 0px;
   overflow: scroll;
+  scrollbar-width: none;
 }
 
 .channel-list h3 {
@@ -16,6 +17,7 @@
 .channel-list ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .channel-list li {
@@ -27,12 +29,106 @@
 }
 
 .channel-list li:hover {
-    background: #F2F2F2; /* Highlight effect */
+  background: #f2f2f2; /* Highlight effect */
 }
 
 .channel-list ul li.selected {
-    background: #F2F2F2; /* Change to your desired color */
-    color: rgba(23, 21, 21, 0.652);;
-    font-weight: bold;
-    border-radius: 5px;
-  }
+  background: #f2f2f2; /* Change to your desired color */
+  color: rgba(23, 21, 21, 0.652);
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.channel-item {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.channel-item:hover {
+  background: #f2f2f2;
+}
+
+.channel-header {
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  display: flex;
+  justify-content: space-between;
+  /* font-weight: bold; */
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 4px;
+  height: 15px;
+  text-align: left;
+}
+
+.channel-content {
+  display: flex;
+  /* align-items: center; */
+  gap: 0px;
+}
+
+.user-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 20%;
+  object-fit: cover;
+  margin-top: 0px;
+}
+
+.channel-name {
+  /* font-weight: bold; */
+  font-size: 12px;
+  text-align: left;
+}
+
+.channel-name-intro {
+  font-size: 10px;
+}
+
+.timestamp {
+  font-size: 10px;
+  color: gray;
+}
+
+.last-message {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.sender {
+  font-weight: bold;
+  color: #444;
+}
+
+.message-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  width: 100%;
+}
+
+.sender-name {
+  color: rgb(33, 31, 31);
+  font-weight: bold;
+  font-size: 15px;
+  text-align: left;
+}
+
+.preview {
+  width: 75%;
+  text-align: left;
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+  white-space: normal; /* Allow wrapping */
+  overflow-wrap: break-word; /* Ensure long words break properly */
+  word-wrap: break-word;
+  display: block;
+  /* max-width: 100%; */
+}

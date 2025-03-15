@@ -6,6 +6,7 @@ import "../styles/Dashboard.css";
 import SideBar from "./SideBar";
 import ChannelList from "./ChannelList";
 import ChatWindow from "./ChatWindow";
+import ActivityFeed from "./ActivityFeed";
 
 function Dashboard() {
   const { logout } = useAuth();
@@ -14,13 +15,14 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedChannel, setSelectedChannel] = useState(null);
+  const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
     const fetchSecuredData = async () => {
       try {
         // Example of accessing a secured endpoint
         const response = await api.get("/users/me");
-        console.log("Secured Data:", response.data);
+        // console.log("Secured Data:", response.data);
         setUserData(response.data);
       } catch (err) {
         setError("Failed to load secure data");
@@ -41,7 +43,7 @@ function Dashboard() {
   if (loading) {
     return <div className="loading">Loading secure data...</div>;
   }
-  console.log("Selected Channel:", selectedChannel);
+  // console.log("Selected Channel:", selectedChannel);
 
   return (
     <div className="dashboard-container">
@@ -57,13 +59,29 @@ function Dashboard() {
       <div className="dashboard-main">
         {/* Sidebar */}
         <SideBar />
+        {/* Activity Feed in the Middle (Like the Image) */}
+        <div className="activity-container">
+          <ActivityFeed activeTab={activeTab} setActiveTab={setActiveTab} />
+          {activeTab === "all" && (
+            <ChannelList onSelectChannel={setSelectedChannel} />
+          )}
+        </div>
+        {/* <ActivityFeed activeTab={activeTab} setActiveTab={setActiveTab} /> */}
+        {/* Show Channel List ONLY when "All" tab is selected */}
+        {/* {activeTab === "all" && (
+          <ChannelList onSelectChannel={setSelectedChannel} />
+        )} */}
 
         {/* Channel List */}
-        <ChannelList onSelectChannel={setSelectedChannel} />
+        {/* <ChannelList onSelectChannel={setSelectedChannel} /> */}
 
         {/* Chat Window */}
         {selectedChannel ? (
-          <ChatWindow channelId={selectedChannel} />
+          <ChatWindow
+            channelId={selectedChannel}
+            channelName={`Channel ${selectedChannel}`}
+            onClose={() => setSelectedChannel(null)}
+          />
         ) : (
           <div className="placeholder">Select a channel to start chatting</div>
         )}

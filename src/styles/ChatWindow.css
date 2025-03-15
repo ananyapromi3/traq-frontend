@@ -79,3 +79,50 @@
   word-break: break-word; /* Prevent overflow issues */
   max-width: 100%; /* Ensure it doesn't extend beyond container */
 }
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #666;
+}
+
+.icon-button:hover {
+  color: #666;
+  background-color: white;
+  /* cursor: pointer; */
+}
+
+.close-button {
+  color: #888;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  /* color: #e01e5a; */
+  cursor: pointer;
+  background-color: #888;
+  color: white;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-header h2 {
+  font-size: 18px;
+}
+
+.chat-actions {
+  display: flex;
+  gap: 10px;
+}
