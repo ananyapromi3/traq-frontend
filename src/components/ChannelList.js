@@ -5,6 +5,7 @@ import "../styles/ChannelList.css";
 const ChannelList = ({ onSelectChannel }) => {
   //   const [channels, setChannels] = useState([]);
   const [channels, setChannels] = useState({ public: [] });
+  const [selectedChannel, setSelectedChannel] = useState(null);
 
   useEffect(() => {
     const fetchChannels = async () => {
@@ -27,12 +28,21 @@ const ChannelList = ({ onSelectChannel }) => {
     fetchChannels();
   }, []);
 
+  const handleChannelClick = (channelId) => {
+    setSelectedChannel(channelId);
+    onSelectChannel(channelId);
+  };
+
   return (
     <div className="channel-list">
       <h3>Channels</h3>
       <ul>
         {channels.public.map((channel) => (
-          <li key={channel.id} onClick={() => onSelectChannel(channel.id)}>
+          <li
+            key={channel.id}
+            className={selectedChannel === channel.id ? "selected" : ""}
+            onClick={() => handleChannelClick(channel.id)}
+          >
             #{channel.name}
           </li>
         ))}

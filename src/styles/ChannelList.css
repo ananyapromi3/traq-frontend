@@ -1,8 +1,12 @@
 .channel-list {
   width: 250px;
-  background: #fff;
+  background: white; /* Slightly darker than sidebar */
+  color: rgba(30, 27, 27, 0.652);
+  /* border-right: 1px solid #532753; */
   padding: 15px;
-  border-right: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 5px;
+  overflow: scroll;
 }
 
 .channel-list h3 {
@@ -17,9 +21,18 @@
 .channel-list li {
   padding: 10px;
   cursor: pointer;
-  transition: background 0.2s;
+  border-radius: 4px;
+  transition: background 0.3s;
+  color: rgba(46, 42, 42, 0.652); /* Soft white text */
 }
 
 .channel-list li:hover {
-  background: #f4f4f4;
+    background: #F2F2F2; /* Highlight effect */
 }
+
+.channel-list ul li.selected {
+    background: #F2F2F2; /* Change to your desired color */
+    color: rgba(23, 21, 21, 0.652);;
+    font-weight: bold;
+    border-radius: 5px;
+  }

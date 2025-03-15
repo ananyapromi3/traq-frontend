@@ -1,9 +1,10 @@
-/* Dashboard.css */
+/* Dashboard Container */
 .dashboard-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f4f5f8;
+  background: #f2f2f2;
+  overflow: hidden;
 }
 
 /* Header */
@@ -12,46 +13,63 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background: #ffffff;
-  border-bottom: 1px solid #ddd;
+  height: 5vh;
+  background: #f2f2f2; /* Slack header color */
+  color: white;
+  /* border-bottom: 1px solid #532753; */
+}
+
+/* Footer */
+.dashboard-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #f2f2f2; /* Slack header color */
+  color: white;
+  /* border-bottom: 1px solid #532753; */
 }
 
 .logout-button {
-  background: #ff4b5c;
+  background: #e01e5a; /* Slack pink */
   color: white;
   border: none;
   padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .logout-button:hover {
-  background: #d9364a;
+  background: #c71d52;
 }
 
-/* Main Dashboard Layout */
+/* Main Layout */
 .dashboard-main {
   display: flex;
   flex: 1;
-  height: calc(100vh - 50px);
+  height: 100vh;
+  /* overflow: scroll; */
 }
 
 /* Sidebar */
 .sidebar {
   width: 80px;
-  background: #2c2f33;
+  background: #3f0e40; /* Slack sidebar */
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+  /* border-right: 1px solid #532753; */
 }
 
 /* Channel List */
 .channel-list {
   width: 250px;
-  background: #ffffff;
-  border-right: 1px solid #ddd;
+  background: #350d36; /* Slightly darker than sidebar */
+  color: white;
+  /* border-right: 1px solid #532753; */
   padding: 15px;
 }
 
@@ -65,19 +83,17 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background 0.3s;
-}
-
-.channel-list li:hover {
-  background: #f0f0f0;
+  color: #d1c6d3; /* Soft white text */
 }
 
 /* Chat Window */
 .chat-window {
   flex: 1;
-  background: #fff;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   padding: 15px;
+  color: #333;
 }
 
 /* Placeholder */

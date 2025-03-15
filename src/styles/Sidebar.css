@@ -1,30 +1,95 @@
 .sidebar {
-  width: 60px;
-  background: #f4f4f4;
-  padding: 10px;
+  /* width: 80px; */
+  background: #f2f2f2; /* Slack sidebar */
+  color: #a5a4a4;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  /* padding-top: 20px; */
+  /* border-right: 1px solid #532753; */
+
+  width: 70px;
+  /* background: #f5f5f5; */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+  padding: 10px 0;
+  height: 90vh;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-top {
+  margin-bottom: auto;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px; /* Slightly rounded corners */
+  object-fit: cover;
+  color: #a5a4a4;
 }
 
 .sidebar-nav {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .nav-item {
-  background: none;
+  /* background: none; */
+  /* border: none; */
+  /* font-size: 20px; */
+  /* margin: 10px 0; */
+  /* cursor: pointer; */
+  color: #a5a4a4;
+
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: transparent;
   border: none;
-  font-size: 24px;
-  margin: 10px 0;
   cursor: pointer;
+  font-size: 20px;
+  transition: background 0.3s;
 }
 
 .nav-item.active {
-  color: #007bff;
+  color: white;
+  background-color: #d38ef4;
+  font-weight: bold;
+}
+
+.nav-item:hover {
+  /* background: #b1aeae; */
+  background: #a5a4a4;
+  color: white;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  margin-bottom: 10px;
+  cursor: alias;
+}
+
+.bottom-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+  position: relative;
+}
+
+.online-status {
+  width: 10px;
+  height: 10px;
+  background: #2ecc71; /* Green for online */
+  border-radius: 50%;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  border: 2px solid white;
 }

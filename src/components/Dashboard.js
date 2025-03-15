@@ -68,6 +68,12 @@ function Dashboard() {
           <div className="placeholder">Select a channel to start chatting</div>
         )}
       </div>
+      {/* <div className="dashboard-footer">
+        <h2>Welcome to the Secured Dashboard</h2>
+        <button onClick={handleLogout} className="logout-button">
+          Logout
+        </button>
+      </div> */}
     </div>
   );
 }
