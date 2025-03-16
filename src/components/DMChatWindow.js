@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import "../styles/ChatWindow.css";
 import api from "../services/api";
+import EmojiPicker from "emoji-picker-react";
 
 const DMChatWindow = ({ userId, onClose }) => {
   const [messages, setMessages] = useState([]);
@@ -21,6 +22,18 @@ const DMChatWindow = ({ userId, onClose }) => {
   const [userIcon, setUserIcon] = useState("");
   const [file, setFile] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [message, setMessage] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showFileInput, setShowFileInput] = useState(false);
+
+  const toggleFileInput = () => {
+    setShowFileInput((prev) => !prev);
+  };
+
+  const addEmoji = (emoji) => {
+    setMessage((prev) => prev + emoji.native); // Append emoji to text
+    setShowEmojiPicker(false); // Hide picker after selection
+  };
 
   useEffect(() => {
     if (!userId) return;
@@ -78,6 +91,7 @@ const DMChatWindow = ({ userId, onClose }) => {
   }, [userId]);
 
   const sendMessage = async () => {
+    setShowEmojiPicker(false); // Hide picker after sending
     if (!newMessage.trim()) return;
     console.log("Sending message :", newMessage, " to user:", userId);
 
@@ -139,6 +153,7 @@ const DMChatWindow = ({ userId, onClose }) => {
       });
 
       setFile(null);
+      setShowFileInput(false);
       alert("File uploaded successfully!");
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -157,6 +172,15 @@ const DMChatWindow = ({ userId, onClose }) => {
           <FaTimes />
         </button>
       </div>
+      {showEmojiPicker && (
+        <div className="emoji-picker">
+          <EmojiPicker
+            onEmojiClick={(emoji) =>
+              setNewMessage((prev) => prev + emoji.emoji)
+            }
+          />
+        </div>
+      )}
 
       {/* Messages */}
       {/* <div className="messages">
@@ -205,20 +229,30 @@ const DMChatWindow = ({ userId, onClose }) => {
           placeholder={`Message #${userName}`}
           onKeyPress={(e) => e.key === "Enter" && sendMessage()}
         />
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          className="file-input"
-        />
+        {/* {showFileInput && (
+          <div className="file-upload">
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="file-input"
+            />
+            <button className="submit-button" onClick={uploadFile}>
+              Upload
+            </button>
+          </div>
+        )} */}
         <div className="message-box">
           <div className="message-input">
-            <button className="icon-button" onClick={uploadFile}>
+            <button className="icon-button" onClick={toggleFileInput}>
               <FaPlus />
             </button>
             <button className="icon-button">
               <FaMicrophone />
             </button>
-            <button className="icon-button">
+            <button
+              className="icon-button"
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            >
               <FaSmile />
             </button>
             <button className="icon-button">

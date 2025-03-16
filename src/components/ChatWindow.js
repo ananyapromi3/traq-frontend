@@ -14,6 +14,7 @@ import {
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import "../styles/ChatWindow.css";
+import EmojiPicker from "emoji-picker-react";
 
 const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
   const [messages, setMessages] = useState([]);
@@ -25,6 +26,18 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
   const [pinned, setPinned] = useState(0);
   const [file, setFile] = useState(null);
   const messagesEndRef = useRef(null);
+  const [message, setMessage] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showFileInput, setShowFileInput] = useState(false);
+
+  const toggleFileInput = () => {
+    setShowFileInput((prev) => !prev);
+  };
+
+  const addEmoji = (emoji) => {
+    setMessage((prev) => prev + emoji.native); // Append emoji to text
+    setShowEmojiPicker(false); // Hide picker after selection
+  };
 
   useEffect(() => {
     if (!channelId) return;
@@ -114,6 +127,7 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
   }, [channelId]);
 
   const sendMessage = async () => {
+    setShowEmojiPicker(false); // Hide picker after sending
     if (!newMessage.trim()) return;
 
     try {
@@ -191,6 +205,7 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
       });
 
       setFile(null);
+      setShowFileInput(false);
       alert("File uploaded successfully!");
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -213,7 +228,7 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
       {/* Header */}
       <div className="chat-header">
         <div className="channel-header">
-          <h2>#{channelName}</h2>
+          <h2 className="channel-name-header">#{channelName}</h2>
           <button className="icon-button-1">
             <IoIosArrowDown />
           </button>
@@ -230,6 +245,15 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
           </button>
         </div>
       </div>
+      {showEmojiPicker && (
+        <div className="emoji-picker">
+          <EmojiPicker
+            onEmojiClick={(emoji) =>
+              setNewMessage((prev) => prev + emoji.emoji)
+            }
+          />
+        </div>
+      )}
 
       {/* Messages */}
       <div className="messages">
@@ -260,20 +284,30 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
           placeholder={`Message #${channelName}`}
           onKeyPress={(e) => e.key === "Enter" && sendMessage()}
         />
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          className="file-input"
-        />
+        {showFileInput && (
+          <div className="file-upload">
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="file-input"
+            />
+            <button className="submit-button" onClick={uploadFile}>
+              Upload
+            </button>
+          </div>
+        )}
         <div className="message-box">
           <div className="message-input">
-            <button className="icon-button" onClick={uploadFile}>
+            <button className="icon-button" onClick={toggleFileInput}>
               <FaPlus />
             </button>
             <button className="icon-button">
               <FaMicrophone />
             </button>
-            <button className="icon-button">
+            <button
+              className="icon-button"
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            >
               <FaSmile />
             </button>
             <button className="icon-button">

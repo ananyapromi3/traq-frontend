@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Login.css";
+import slackLogo from "../assets/Slack_icon_2019.svg.png"; // Add Slack logo
 
 function Login() {
   const [credentials, setCredentials] = useState({
@@ -12,7 +13,6 @@ function Login() {
   const { login, error, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // Redirect if already authenticated
   React.useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard");
@@ -44,35 +44,36 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>Login</h2>
+        <img src={slackLogo} alt="Slack Logo" className="slack-logo" />
+        <h2>Sign in to Sisimpur</h2>
+        <p className="subtext">Enter your details below</p>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Username</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={credentials.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={credentials.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Username"
+            value={credentials.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            value={credentials.password}
+            onChange={handleChange}
+            required
+          />
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+        <p className="footer-text">
+          New to Sisimpur? <a href="/login">Create an account</a>
+        </p>
       </div>
     </div>
   );

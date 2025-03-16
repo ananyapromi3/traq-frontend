@@ -6,6 +6,14 @@
   background-color: #350d36;
 }
 
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #3f0e40; /* Slack's primary color */
+}
+
 .signin-box {
   background: #fff;
   padding: 2rem;
@@ -15,16 +23,33 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Login Box */
+.login-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+}
+
+/* Slack Logo */
+.slack-logo {
+  width: 140px;
+  margin-bottom: 10px;
+}
+
 .logo {
   width: 120px;
   margin-bottom: 10px;
 }
 
+/* Headings */
 h2 {
-  font-size: 22px;
+  font-size: 24px;
   color: #3f0e40;
+  margin-bottom: 10px;
 }
-
 .subtext {
   font-size: 14px;
   color: #606060;
