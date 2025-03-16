@@ -8,18 +8,18 @@ const ActivityFeed = ({ activeTab, setActiveTab }) => {
   const [selectedChannel, setSelectedChannel] = useState(null);
   // setSelectedChannel(selectedChannel1);
 
-  useEffect(() => {
-    const fetchActivity = async () => {
-      try {
-        const response = await api.get("/users/me/notifications");
-        setActivity(response.data);
-      } catch (error) {
-        console.error("Error fetching activity feed:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchActivity = async () => {
+  //     try {
+  //       const response = await api.get("/users/me/notifications");
+  //       setActivity(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching activity feed:", error);
+  //     }
+  //   };
 
-    fetchActivity();
-  }, []);
+  //   fetchActivity();
+  // }, []);
 
   return (
     <div className="activity-feed">
@@ -29,7 +29,7 @@ const ActivityFeed = ({ activeTab, setActiveTab }) => {
         {/* <h2>Activity</h2>
         <br /> */}
         <div className="tabs">
-          {["all", "mentions", "threads", "reactions", "..."].map((tab) => (
+          {["all", "mentions", "threads", "reactions", ". . ."].map((tab) => (
             <button
               key={tab}
               className={activeTab === tab ? "active" : ""}

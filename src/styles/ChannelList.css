@@ -132,3 +132,7 @@
   display: block;
   /* max-width: 100%; */
 }
+
+.special {
+  margin-top: -500px;
+}

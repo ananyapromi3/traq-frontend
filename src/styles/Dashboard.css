@@ -12,10 +12,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  height: 5vh;
+  padding: 5px 20px;
+  padding-bottom: 15px;
+  height: 50px;
   background: #f2f2f2; /* Slack header color */
   color: white;
+  font-size: 20px;
   /* border-bottom: 1px solid #532753; */
 }
 
@@ -98,18 +100,25 @@
 
 /* Placeholder */
 .placeholder {
+  background-color: white;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   color: #888;
+  border-radius: 10px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  /* padding: 15px; */
+  margin-top: -5px;
 }
 
 .activity-container {
   display: flex;
   flex-direction: column;
-  /* width: 250px; */
+  background-color: white;
+  width: 430px;
+  border-radius: 10px;
 }
 
 .activity-feed {
@@ -120,4 +129,39 @@
 .channel-list {
   /* width: 100%; */
   margin-top: 0px; /* Pushes it down */
+}
+
+.nav-item {
+  /* background: none; */
+  /* border: none; */
+  /* font-size: 20px; */
+  /* margin: 10px 0; */
+  /* cursor: pointer; */
+  color: #a5a4a4;
+  width: 30px;
+  height: 30px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  border-radius: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background 0.3s;
+  padding: 0px;
+}
+
+.nav-item.active {
+  color: white;
+  background-color: #d38ef4;
+  font-weight: bold;
+}
+
+.nav-item:hover {
+  /* background: #b1aeae; */
+  background: #a5a4a4;
+  color: white;
+  /* width: 30px;
+  height: 30px; */
 }

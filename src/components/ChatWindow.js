@@ -7,10 +7,13 @@ import {
   FaPaperclip,
   FaSmile,
   FaPaperPlane,
+  FaPlus,
+  FaMicrophone,
+  FaFont,
 } from "react-icons/fa";
 import "../styles/ChatWindow.css";
 
-const ChatWindow = ({ channelId, channelName1, onClose }) => {
+const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [users, setUsers] = useState({});
@@ -18,6 +21,7 @@ const ChatWindow = ({ channelId, channelName1, onClose }) => {
   const [memberCount, setMemberCount] = useState(0);
   const [channelName, setChannelName] = useState("");
   const [pinned, setPinned] = useState(0);
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     if (!channelId) return;
@@ -40,12 +44,11 @@ const ChatWindow = ({ channelId, channelName1, onClose }) => {
         const userIds = [...new Set(messagesData.map((msg) => msg.userId))];
 
         const response2 = await axios.get(
-            `https://traq.duckdns.org/api/v3/channels/${channelId}/pins`,
-            { withCredentials: true }
-          );
+          `https://traq.duckdns.org/api/v3/channels/${channelId}/pins`,
+          { withCredentials: true }
+        );
         //   console.log("Pinned Data:", response2);
-          setPinned(response2.data.length);
-  
+        setPinned(response2.data.length);
 
         const userRequests = userIds.map((id) =>
           axios.get(`https://traq.duckdns.org/api/v3/users/${id}`, {
@@ -159,8 +162,29 @@ const ChatWindow = ({ channelId, channelName1, onClose }) => {
         }
       };
       fetchMessages(); // Reload messages after sending
+      refreshChannels();
     } catch (error) {
       console.error("Error sending message:", error);
+    }
+  };
+
+  const uploadFile = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("channelId", channelId);
+
+    try {
+      await axios.post("https://traq.duckdns.org/api/v3/files", formData, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setFile(null);
+      alert("File uploaded successfully!");
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
 
@@ -213,24 +237,42 @@ const ChatWindow = ({ channelId, channelName1, onClose }) => {
         ))}
       </div>
 
-      {/* Message Input */}
-      <div className="message-input">
-        <button className="icon-button">
-          <FaPaperclip />
-        </button>
+      <div className="message-input-container">
         <input
+          className="message-input-input"
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder={`Message #${channelName}`}
           onKeyPress={(e) => e.key === "Enter" && sendMessage()}
         />
-        <button className="icon-button">
-          <FaSmile />
-        </button>
-        <button className="send-button" onClick={sendMessage}>
-          <FaPaperPlane />
-        </button>
+        <input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="file-input"
+        />
+        <div className="message-box">
+          <div className="message-input">
+            <button className="icon-button" onClick={uploadFile}>
+              <FaPlus />
+            </button>
+            <button className="icon-button">
+              <FaMicrophone />
+            </button>
+            <button className="icon-button">
+              <FaSmile />
+            </button>
+            <button className="icon-button">
+              <FaFont />
+            </button>
+            {/* <button className="send-button" onClick={sendMessage}>
+            <FaPaperPlane />
+          </button> */}
+          </div>
+          <button className="send-button" onClick={sendMessage}>
+            <FaPaperPlane />
+          </button>
+        </div>
       </div>
     </div>
   );

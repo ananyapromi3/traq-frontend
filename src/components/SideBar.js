@@ -2,17 +2,42 @@ import React, { useState, useEffect } from "react";
 import { FaHome, FaBell, FaInbox, FaEllipsisH } from "react-icons/fa";
 import "../styles/Sidebar.css";
 import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
 const SideBar = () => {
-  const { user } = useAuth();
-  const [avatarUrl, setAvatarUrl] = useState("/default-avatar.png");
+  //   const { user } = useAuth();
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  //   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (user?.id) {
-      setAvatarUrl(`https://traq.duckdns.org/api/v3/users/${user.id}/icon`);
-    }
-  }, [user]);
+    const fetchAvatar = async () => {
+      try {
+        const response = await axios.get(
+          `https://traq.duckdns.org/api/v3/users/me/icon`,
+          {
+            withCredentials: true,
+            responseType: "blob",
+          }
+        );
 
+        const imageUrl = URL.createObjectURL(response.data);
+        setAvatarUrl(imageUrl);
+      } catch (error) {
+        console.error("Failed to fetch avatar:", error);
+        setAvatarUrl("/default-avatar.png"); // Fallback avatar
+      }
+    };
+
+    fetchAvatar();
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      if (avatarUrl) {
+        URL.revokeObjectURL(avatarUrl);
+      }
+    };
+  }, []);
+  
   return (
     <div className="sidebar">
       <nav className="sidebar-nav">

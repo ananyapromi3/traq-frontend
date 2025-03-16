@@ -7,6 +7,16 @@ import SideBar from "./SideBar";
 import ChannelList from "./ChannelList";
 import ChatWindow from "./ChatWindow";
 import ActivityFeed from "./ActivityFeed";
+import GroupList from "./GroupList";
+import {
+  FaHome,
+  FaBell,
+  FaInbox,
+  FaEllipsisH,
+  FaLogo,
+  FaSignOutAlt,
+} from "react-icons/fa";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Dashboard() {
   const { logout } = useAuth();
@@ -50,8 +60,8 @@ function Dashboard() {
       {/* Header */}
       <div className="dashboard-header">
         <h2>Welcome to the Secured Dashboard</h2>
-        <button onClick={handleLogout} className="logout-button">
-          Logout
+        <button onClick={handleLogout} className="nav-item">
+          <FaSignOutAlt />
         </button>
       </div>
 
@@ -62,8 +72,11 @@ function Dashboard() {
         {/* Activity Feed in the Middle (Like the Image) */}
         <div className="activity-container">
           <ActivityFeed activeTab={activeTab} setActiveTab={setActiveTab} />
-          {activeTab === "all" && (
+          {activeTab === "threads" && (
             <ChannelList onSelectChannel={setSelectedChannel} />
+          )}
+          {activeTab === "mentions" && (
+            <GroupList onSelectChannel={setSelectedChannel} />
           )}
         </div>
         {/* <ActivityFeed activeTab={activeTab} setActiveTab={setActiveTab} /> */}

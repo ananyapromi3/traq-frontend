@@ -3,7 +3,7 @@ import axios from "axios";
 import api from "../services/api";
 import "../styles/ChannelList.css";
 
-const ChannelList = ({ onSelectChannel }) => {
+const GrouplList = ({ onSelectChannel }) => {
   //   const [channels, setChannels] = useState([]);
   const [channels, setChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
@@ -29,6 +29,26 @@ const ChannelList = ({ onSelectChannel }) => {
             `/channels/${channel.id}/messages?limit=1`
           );
           const lastMessage = messageResponse.data?.[0] || null; // Get the latest message
+          //   console.log("Last Message:", lastMessage);
+          //   console.log("Time: ", lastMessage.updatedAt);
+
+          //   if (lastMessage) {
+          //     // Fetch user details (name & icon) using userId
+          //     const userResponse = await api.get(`/users/${lastMessage.userId}`);
+          //     const userData = userResponse.data;
+          //     // const userIconResponse = await api.get(
+          //     //   `/users/${lastMessage.userId}/icon`,
+          //     //   {
+          //     //     responseType: "blob",
+          //     //   }
+          //     // );
+
+          //     lastMessage = {
+          //       ...lastMessage,
+          //       sender: userData.displayName,
+          //       //   senderIcon: userIconResponse.data,
+          //     };
+          //   }
 
           return {
             ...channel,
@@ -48,6 +68,17 @@ const ChannelList = ({ onSelectChannel }) => {
           ),
         ]; // Remove undefined/null values
 
+        // // Fetch user details in one API call (assuming API supports bulk fetch)
+        // const userResponse = await Promise.all(
+        //   userIds.map((userId) => api.get(`/users/${userId}`))
+        // );
+
+        // const userIconResponse = await Promise.all(
+        //   userIds.map((userId) =>
+        //     api.get(`/users/${userId}/icon`, { responseType: "blob" })
+        //   )
+        // );
+        // Fetch user details
         const userResponses = await Promise.all(
           userIds.map((userId) => api.get(`/users/${userId}`))
         );
@@ -192,4 +223,4 @@ const ChannelList = ({ onSelectChannel }) => {
   );
 };
 
-export default ChannelList;
+export default GrouplList;
