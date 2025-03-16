@@ -16,6 +16,8 @@ import {
   FaLogo,
   FaSignOutAlt,
 } from "react-icons/fa";
+import DMlList from "./DMList";
+import DMChatWindow from "./DMChatWindow";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Dashboard() {
@@ -26,6 +28,9 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [activeTab, setActiveTab] = useState("all");
+  const [selectedDM, setSelectedDM] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchSecuredData = async () => {
@@ -45,6 +50,66 @@ function Dashboard() {
     fetchSecuredData();
   }, []);
 
+  const fetchUsersAndMessages = async () => {
+    try {
+      const meResponse = await api.get("/users/me");
+      const userId = meResponse.data.id;
+
+      const usersResponse = await api.get("/users");
+      const allUsers = usersResponse.data;
+
+      const userMessagePromises = allUsers.map(async (user) => {
+        const messagesResponse = await api.get(
+          `/users/${user.id}/messages?limit=1`
+        );
+        const lastMessage = messagesResponse.data?.[0] || null;
+        return { ...user, lastMessage };
+      });
+
+      let usersWithMessages = await Promise.all(userMessagePromises);
+
+      const userIconPromises = allUsers.map(async (user) => {
+        try {
+          const iconResponse = await api.get(`/users/${user.id}/icon`, {
+            responseType: "blob",
+          });
+          const iconUrl = URL.createObjectURL(iconResponse.data);
+          return { userId: user.id, iconUrl };
+        } catch {
+          return { userId: user.id, iconUrl: "/default-avatar.png" };
+        }
+      });
+
+      const userIcons = await Promise.all(userIconPromises);
+
+      usersWithMessages = usersWithMessages.map((user) => {
+        const userIcon = userIcons.find((icon) => icon.userId === user.id);
+        return {
+          ...user,
+          iconUrl: userIcon?.iconUrl || "/default-avatar.png",
+        };
+      });
+
+      usersWithMessages.sort((a, b) => {
+        const timeA = a.lastMessage?.updatedAt
+          ? new Date(a.lastMessage.updatedAt).getTime()
+          : 0;
+        const timeB = b.lastMessage?.updatedAt
+          ? new Date(b.lastMessage.updatedAt).getTime()
+          : 0;
+        return timeB - timeA;
+      });
+
+      setUsers(usersWithMessages);
+    } catch (error) {
+      console.error("Error fetching users and messages:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsersAndMessages();
+  }, []);
+
   const handleLogout = async () => {
     await logout();
     navigate("/login");
@@ -53,7 +118,6 @@ function Dashboard() {
   if (loading) {
     return <div className="loading">Loading secure data...</div>;
   }
-  // console.log("Selected Channel:", selectedChannel);
 
   return (
     <div className="dashboard-container">
@@ -78,25 +142,54 @@ function Dashboard() {
           {activeTab === "mentions" && (
             <GroupList onSelectChannel={setSelectedChannel} />
           )}
+          {activeTab === "all" && (
+            <DMlList
+              onSelectUser={setSelectedDM}
+              refreshDMList={fetchUsersAndMessages}
+            />
+          )}
         </div>
-        {/* <ActivityFeed activeTab={activeTab} setActiveTab={setActiveTab} /> */}
-        {/* Show Channel List ONLY when "All" tab is selected */}
-        {/* {activeTab === "all" && (
-          <ChannelList onSelectChannel={setSelectedChannel} />
-        )} */}
 
-        {/* Channel List */}
-        {/* <ChannelList onSelectChannel={setSelectedChannel} /> */}
-
-        {/* Chat Window */}
-        {selectedChannel ? (
+        {/* Chat Window
+        {activeTab === "threads" && selectedChannel ? (
           <ChatWindow
             channelId={selectedChannel}
             channelName={`Channel ${selectedChannel}`}
             onClose={() => setSelectedChannel(null)}
           />
         ) : (
-          <div className="placeholder">Select a channel to start chatting</div>
+          <div className="placeholder">
+            Select a channel or user to start chatting
+          </div>
+        )}
+        {activeTab === "all" && selectedDM ? (
+          <DMChatWindow
+            userId={selectedChannel}
+            onClose={() => setSelectedChannel(null)}
+          />
+        ) : (
+          <div className="placeholder">
+            Select a channel or user to start chatting
+          </div>
+        )} */}
+        {/* Chat Window */}
+        {selectedChannel || selectedDM ? (
+          activeTab === "threads" ? (
+            <ChatWindow
+              channelId={selectedChannel}
+              channelName={`Channel ${selectedChannel}`}
+              onClose={() => setSelectedChannel(null)}
+            />
+          ) : (
+            <DMChatWindow
+              userId={selectedDM}
+              onClose={() => setSelectedDM(null)}
+            />
+          )
+        ) : (
+          <div className="placeholder">
+            Select a channel or user to start chatting
+          </div>
         )}
       </div>
       {/* <div className="dashboard-footer">

@@ -265,9 +265,6 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
             <button className="icon-button">
               <FaFont />
             </button>
-            {/* <button className="send-button" onClick={sendMessage}>
-            <FaPaperPlane />
-          </button> */}
           </div>
           <button className="send-button" onClick={sendMessage}>
             <FaPaperPlane />
