@@ -154,8 +154,9 @@ const ChannelList = ({ onSelectChannel }) => {
         {channels.map((channel) => (
           <li
             key={channel.id}
-            onClick={() => onSelectChannel(channel.id)}
-            className="channel-item"
+            onClick={() => handleChannelClick(channel.id)}
+            // className="channel-item"
+            className={`channel-item ${selectedChannel === channel.id ? "selected" : ""}`}
           >
             <div className="channel-header">
               <div className="channel-name">

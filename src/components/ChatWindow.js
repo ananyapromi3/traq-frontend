@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import {
   FaUsers,
@@ -11,6 +11,8 @@ import {
   FaMicrophone,
   FaFont,
 } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import "../styles/ChatWindow.css";
 
 const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
@@ -22,12 +24,17 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
   const [channelName, setChannelName] = useState("");
   const [pinned, setPinned] = useState(0);
   const [file, setFile] = useState(null);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     if (!channelId) return;
 
     const fetchMessages = async () => {
       try {
+        const scrollToBottom = () => {
+          messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        };
+
         const response1 = await axios.get(
           `https://traq.duckdns.org/api/v3/channels/${channelId}`,
           { withCredentials: true }
@@ -81,7 +88,9 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
         messagesData.sort(
           (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
         );
+
         setMessages(messagesData);
+        setTimeout(() => scrollToBottom(), 100);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -203,7 +212,12 @@ const ChatWindow = ({ channelId, onClose, refreshChannels }) => {
     <div className="chat-window">
       {/* Header */}
       <div className="chat-header">
-        <h2>#{channelName}</h2>
+        <div className="channel-header">
+          <h2>#{channelName}</h2>
+          <button className="icon-button-1">
+            <IoIosArrowDown />
+          </button>
+        </div>
         <div className="chat-actions">
           <button className="icon-button">
             <FaUsers /> {memberCount}

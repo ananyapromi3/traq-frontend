@@ -9,6 +9,7 @@ const DMlList = ({ onSelectUser }) => {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchUsersAndMessages = async () => {
@@ -31,6 +32,7 @@ const DMlList = ({ onSelectUser }) => {
         });
 
         let usersWithMessages = await Promise.all(userMessagePromises);
+        // console.log("Users with messages:", usersWithMessages);
 
         // Fetch user icons
         const userIconPromises = allUsers.map(async (user) => {
@@ -76,8 +78,8 @@ const DMlList = ({ onSelectUser }) => {
     fetchUsersAndMessages();
   }, []);
 
-  const handleChannelClick = (userId) => {
-    setSelectedChannel(userId);
+  const handleUserClick = (userId) => {
+    setSelectedUser(userId);
     onSelectUser(userId);
   };
 
@@ -98,13 +100,15 @@ const DMlList = ({ onSelectUser }) => {
         {users.map((user) => (
           <li
             key={user.id}
-            onClick={() => onSelectUser(user.id)}
-            className="dm-item"
+            onClick={() => handleUserClick(user.id)}
+            className={`dm-item ${selectedUser === user.id ? "selected" : ""}`}
+            // className="dm-item"
           >
-            <div className="dm-header">
+            {/* <div className="dm-header">
               <img src={user.iconUrl} alt="User Icon" className="user-icon" />
               <div className="message-details">
                 <span className="sender-name">{user.name}</span>
+                <span className="preview"> {user.lastMessage?.content || "No messages yet"} </span>
                 {user.lastMessage && (
                   <>
                     <span className="preview">{user.lastMessage.content}</span>
@@ -114,7 +118,48 @@ const DMlList = ({ onSelectUser }) => {
                   </>
                 )}
               </div>
-            </div>
+            </div> */}
+            {/* <div className="channel-header">
+              <div className="channel-name"></div>
+              {user.lastMessage && (
+                <span className="timestamp">
+                  {formatTime(user.lastMessage.updatedAt)}
+                </span>
+              )}
+            </div> */}
+            {user.lastMessage && (
+              <div className="dm-content">
+                <img
+                  src={user.iconUrl || "/default-avatar.png"}
+                  alt="User Icon"
+                  className="user-icon"
+                />
+                <div className="message-details">
+                  <span className="sender-name">{user.name || "Unknown"}</span>
+                  <span className="timestamp">
+                    {formatTime(user.lastMessage.updatedAt)}
+                  </span>
+                  <span className="preview">
+                    {user.lastMessage?.content || "No messages yet"}
+                  </span>
+                </div>
+              </div>
+            )}
+            {!user.lastMessage && (
+              <div className="channel-content">
+                <img
+                  src={user.iconUrl || "/default-avatar.png"}
+                  alt="User Icon"
+                  className="user-icon"
+                />
+                <div className="message-details">
+                  <span className="sender-name">{user.name || "Unknown"}</span>
+                  <span className="preview">
+                    {user.lastMessage?.content || "No messages yet"}
+                  </span>
+                </div>
+              </div>
+            )}
           </li>
         ))}
       </ul>

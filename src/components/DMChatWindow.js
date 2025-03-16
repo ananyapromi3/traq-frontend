@@ -43,7 +43,7 @@ const DMChatWindow = ({ userId, onClose }) => {
           `https://traq.duckdns.org/api/v3/users/${userId}/messages`,
           { withCredentials: true }
         );
-        console.log("Messages:", response.data);
+        // console.log("Messages:", response.data);
 
         setMessages(
           response.data.sort(
@@ -88,7 +88,7 @@ const DMChatWindow = ({ userId, onClose }) => {
         { embed: false },
         { withCredentials: true }
       );
-      console.log("Temp:", temp);
+      //   console.log("Temp:", temp);
 
       const fetchMessages = async () => {
         try {
@@ -149,8 +149,10 @@ const DMChatWindow = ({ userId, onClose }) => {
     <div className="chat-window">
       {/* Header */}
       <div className="chat-header">
-        <img src={userIcon} alt={userName} className="user-icon" />
-        <h2>{userName}</h2>
+        <div className="channel-header">
+          <img src={userIcon} alt={userName} className="user-icon" />
+          <div className="user-name-1">{userName}</div>
+        </div>
         <button className="close-button" onClick={onClose}>
           <FaTimes />
         </button>
@@ -171,9 +173,7 @@ const DMChatWindow = ({ userId, onClose }) => {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`message ${
-              msg.userId === userId ? "received" : "sent"
-            }`}
+            className={`message ${msg.userId === userId ? "received" : "sent"}`}
           >
             <div className="message-content">
               <span className="timestamp">{formatTime(msg.createdAt)}</span>

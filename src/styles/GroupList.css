@@ -1,4 +1,4 @@
-.channel-list {
+.group-list {
   width: 400px;
   background: white; /* Slightly darker than sidebar */
   color: rgba(30, 27, 27, 0.652);
@@ -10,17 +10,17 @@
   scrollbar-width: none;
 }
 
-.channel-list h3 {
+.group-list h3 {
   margin-bottom: 10px;
 }
 
-.channel-list ul {
+.group-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.channel-list li {
+.group-list li {
   padding: 10px;
   cursor: pointer;
   border-radius: 4px;
@@ -28,31 +28,48 @@
   color: rgba(46, 42, 42, 0.652); /* Soft white text */
 }
 
-.channel-list li:hover {
+.group-list li:hover {
   background: #f2f2f2; /* Highlight effect */
 }
 
-.channel-list ul li.selected {
+.group-list ul li.selected {
   background: #f2f2f2; /* Change to your desired color */
   color: rgba(23, 21, 21, 0.652);
   font-weight: bold;
   border-radius: 5px;
 }
 
-.channel-item {
+.group-item {
   display: flex;
-  flex-direction: column;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.2s ease-in-out;
 }
 
-.channel-item:hover {
+.group-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 20%;
+  object-fit: cover;
+  margin-right: 12px;
+  background-color: #ddd;
+}
+
+.group-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.group-item:hover {
   background: #f2f2f2;
 }
 
-.channel-header {
+.group-header {
   /* display: flex; */
   /* justify-content: space-between; */
   /* align-items: center; */
@@ -66,10 +83,10 @@
   text-align: left;
 }
 
-.channel-content {
+.group-content {
   display: flex;
-  /* align-items: center; */
-  gap: 0px;
+  align-items: center;
+  width: 100%;
 }
 
 .user-icon {
@@ -80,17 +97,33 @@
   margin-top: 0px;
 }
 
-.channel-name {
-  /* font-weight: bold; */
+/* .group-name {
+  font-weight: bold;
   font-size: 12px;
+  text-align: left;
+} */
+
+.group-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
   text-align: left;
 }
 
-.channel-name-intro {
+.group-description {
+  font-size: 14px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-name-intro {
   font-size: 10px;
 }
 
 .timestamp {
+  text-align: right;
   font-size: 10px;
   color: gray;
 }
@@ -130,7 +163,7 @@
   color: #888;
   font-style: italic;
   white-space: normal; /* Allow wrapping */
-  overflow-wrap: break-word; 
+  overflow-wrap: break-word;
   word-wrap: break-word;
   display: block;
   /* max-width: 100%; */
